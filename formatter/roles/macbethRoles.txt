@@ -1,0 +1,42 @@
+First Witch
+Second Witch
+Third Witch
+First Murderer
+Second Murderer
+Third Murderer
+Both Murderers
+First Apparition
+Second Apparition
+Third Apparition
+ALL
+MACBETH LENNOX
+MACBETH
+LADY MACBETH
+MACDUFF
+LADY MACDUFF
+DUNCAN
+MALCOLM
+LENNOX
+ROSS
+BANQUO
+ANGUS
+FLEANCE
+DONALBAIN
+MENTEITH
+CAITHNESS
+SEYTON
+SIWARD
+YOUNG SIWARD
+ATTENDANT
+HECATE
+Sergeant
+Messenger
+Porter
+Old Man
+Servant
+Lord
+Lords
+Soldiers
+Son
+Doctor
+Gentlewoman
