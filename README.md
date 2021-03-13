@@ -3,5 +3,5 @@ forsooth!
 
 note that private tokens are stored in a .env file that is not contained in this repo
 
-### dependencies
-pip install --user discord.py python-dotenv
+#### dependencies
+pip install --user discord.py python-dotenv textgenrnn
