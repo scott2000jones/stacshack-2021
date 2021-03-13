@@ -1,0 +1,31 @@
+RODERIGO
+IAGO
+BRABANTIO
+OTHELLO
+CASSIO
+DUKE OF VENICE
+First Senator
+Second Senator
+Sailor
+First Officer
+DESDEMONA
+MONTANO
+First Gentleman
+Second Gentleman
+Third Gentleman
+Herald
+All
+Clown
+First Musician
+EMILIA
+Gentleman
+BIANCA
+LODOVICO
+RODERIGO
+BIANCA
+GRATIANO
+LODOVICO
+Second Gentlemen
+Fourth Gentlemen
+Fourth Gentleman
+Messenger
