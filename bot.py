@@ -2,6 +2,8 @@
 import os
 import discord
 from dotenv import load_dotenv
+# from textgenrnn import textgenrnn
+# nn = textgenrnn()
 
 load_dotenv('./.env')
 TOKEN = str(os.getenv('DISCORD_TOKEN'))
@@ -25,8 +27,10 @@ async def on_member_join(member):
 @client.event
 async def on_message(message):
     # print(message.author)
+    # to_send = nn.generate()
     if message.author != client.user:
         await message.channel.send("forsooth! i hath taken thy message and i readeth")
+        # await message.channel.send(str(to_send))
     
 
 client.run(TOKEN)
