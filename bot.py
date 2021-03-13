@@ -2,9 +2,9 @@
 import os
 import discord
 from dotenv import load_dotenv
-# from textgenrnn import textgenrnn
-# nn = textgenrnn()
+from textgenrnn import textgenrnn
 
+nn = textgenrnn('./weights/loverboy.hdf5')
 load_dotenv('./.env')
 TOKEN = str(os.getenv('DISCORD_TOKEN'))
 GUILD = str(os.getenv('DISCORD_GUILD'))
@@ -27,10 +27,9 @@ async def on_member_join(member):
 @client.event
 async def on_message(message):
     # print(message.author)
-    # to_send = nn.generate()
+    to_send = nn.generate(return_as_list=True, max_gen_length=300)[0]
     if message.author != client.user:
-        await message.channel.send("forsooth! i hath taken thy message and i readeth")
-        # await message.channel.send(str(to_send))
-    
+        # await message.channel.send("forsooth! i hath taken thy message and i readeth")
+        await message.channel.send(str(to_send))
 
 client.run(TOKEN)
