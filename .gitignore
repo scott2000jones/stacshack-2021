@@ -13,4 +13,5 @@ __pycache__
 # test.py
 # *.hdf5
 # *vocab.json
+textgenrnn_weights.hdf5
 *config.json
