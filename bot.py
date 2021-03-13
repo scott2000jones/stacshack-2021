@@ -1,35 +1,62 @@
-# bot.py
 import os
+import sys
+import typing
 import discord
+from discord.ext import commands
+import random
+import time
 from dotenv import load_dotenv
 from textgenrnn import textgenrnn
+import asyncio
+
+if len(sys.argv) != 2:
+    print("Usage:")
+    print("python3 bot.py <TOKEN-NAME>")
+    exit()
 
 nn = textgenrnn('./weights/loverboy.hdf5')
 load_dotenv('./.env')
-TOKEN = str(os.getenv('DISCORD_TOKEN'))
+TOKEN = str(os.getenv(str(sys.argv[1])))
 GUILD = str(os.getenv('DISCORD_GUILD'))
 
 intents = discord.Intents.default()
 intents.members = True
-client = discord.Client(intents=intents)
+bot = commands.Bot(command_prefix="#", intents=intents)
+bot.remove_command("help")
 
-@client.event
+@bot.event
 async def on_ready():
-    print(f'{client.user.name} has connected to Discord!')
+    print(f'{bot.user.name} has connected to Discord!')
 
-@client.event
-async def on_member_join(member):
-    await member.send("forsooth! i bite my thumb at thee >:(")
+class Greetings(commands.Cog):
+    def __init__(self, bot):
+        self.bot = bot
+        self._cd = commands.CooldownMapping.from_cooldown(1, 10, commands.BucketType.member) # Change accordingly
+                                                        # rate, per, BucketType
 
+    @commands.Cog.listener()
+    async def on_member_join(self, member):
+        channel = member.guild.system_channel
+        if channel is not None:
+            await channel.send('forsooth {0.mention}! I bite my thumb at thee >:('.format(member))
 
-# <Message id=820288228758257745 channel=<TextChannel id=820275546692517901 name='general' position=0 nsfw=False news=False category_id=820275546692517899> type=<MessageType.default: 0> author=<Member id=622143275796660235 name='HWIW' discriminator='8724' bot=False nick=None guild=<Guild id=820275546692517898 name='Shakespeare Roleplay Bot Test Server' shard_id=None chunked=True member_count=5>> flags=<MessageFlags value=0>>
+    def get_ratelimit(self, message: discord.Message) -> typing.Optional[int]:
+        """Returns the ratelimit left"""
+        bucket = self._cd.get_bucket(message)
+        return bucket.update_rate_limit()
 
-@client.event
-async def on_message(message):
-    # print(message.author)
-    to_send = nn.generate(return_as_list=True, max_gen_length=300)[0]
-    if message.author != client.user:
-        # await message.channel.send("forsooth! i hath taken thy message and i readeth")
-        await message.channel.send(str(to_send))
+    @commands.Cog.listener()
+    async def on_message(self, message):
+        if message.author != bot.user:
+            # Getting the ratelimit left
+            ratelimit = self.get_ratelimit(message)
+            if ratelimit is None:
+                to_send = nn.generate(return_as_list=True, max_gen_length=300)[0]
+                await message.channel.send(str(to_send))
+                print('not-ratelimited')
+            else:
+                # The user is ratelimited
+                print('ratelimited')
 
-client.run(TOKEN)
+bot.add_cog(Greetings(bot))
+bot.run(TOKEN)
