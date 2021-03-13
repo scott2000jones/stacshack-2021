@@ -1,5 +1,7 @@
 # stacshack-2021
-it is what it is
+forsooth!
+
+note that private tokens are stored in a .env file that is not contained in this repo
 
 ### dependencies
 pip install --user discord.py python-dotenv
