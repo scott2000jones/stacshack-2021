@@ -51,12 +51,21 @@ class Greetings(commands.Cog):
             # Getting the ratelimit left
             ratelimit = self.get_ratelimit(message)
             if ratelimit is None:
-                to_send = nn.generate(return_as_list=True, max_gen_length=300)[0]
-                await message.channel.send(str(to_send))
+                luck = random.randint(0, 10)
+                if luck > 9:
+                    to_send = ('Forsooth {0.mention}!'.format(message.author))
+                    await message.channel.send(str(to_send))
+                else:
+                    to_gen = random.randint(1, 5)
+                    for i in range(0, to_gen):
+                        to_send = nn.generate(return_as_list=True, max_gen_length=300)[0]
+                        await message.channel.send(str(to_send))
+                # to_send = nn.generate(return_as_list=True, max_gen_length=300)[0]
+                # await message.channel.send(str(to_send))
                 print('not-ratelimited')
             else:
                 # The user is ratelimited
                 print('ratelimited')
-
+            
 bot.add_cog(Greetings(bot))
 bot.run(TOKEN)
