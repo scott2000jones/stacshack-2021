@@ -31,8 +31,11 @@ async def on_ready():
 class Greetings(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
-        self._cd = commands.CooldownMapping.from_cooldown(1, 10, commands.BucketType.member) # Change accordingly
-                                                        # rate, per, BucketType
+        self.start_time = time.time()
+        self._cd = commands.CooldownMapping.from_cooldown(1, 10, commands.BucketType.member) # Change accordingly - rate, per, buckettype
+        if sys.argv[1] == 'BOND_TOKEN':
+            self._cd = commands.CooldownMapping.from_cooldown(1, 30, commands.BucketType.member)
+
 
     @commands.Cog.listener()
     async def on_member_join(self, member):
@@ -47,13 +50,30 @@ class Greetings(commands.Cog):
 
     @commands.Cog.listener()
     async def on_message(self, message):
+        if time.time() - self.start_time > 10:
+            
+            diceroll = random.randint(0, 100)
+            end_message = "The playeth is ov'r, thanketh thee f'r watching!"
+            if diceroll <= 50:
+                end_message = ("Uh oh, I has't kicked the bucket - beshrew thee {0.mention}!".format(message.author))
+            if sys.argv[1] == 'BOND_TOKEN':
+                end_message = "Mission accomplished"
+            await message.channel.send(str(end_message))
+            exit()
         if message.author != bot.user:
             # Getting the ratelimit left
             ratelimit = self.get_ratelimit(message)
             if ratelimit is None:
                 luck = random.randint(0, 10)
-                if luck > 9:
-                    to_send = ('Forsooth {0.mention}!'.format(message.author))
+                if sys.argv[1] == 'BOND_TOKEN':
+                    presets = ['My ID is Bot - James Bot', 'Shaken, not defragmented', 'I have the user permissions to kill', 'James Bot is not affiliated with MI6']
+                    rIndex = random.randint(0, len(presets)-1)
+                    to_send = presets[rIndex]
+                    await message.channel.send(str(to_send))
+                elif luck > 6:
+                    presets = [('Forsooth {0.mention}!'.format(message.author)), ('I bite my thumb at thee, {0.mention} >:('.format(message.author)), 'Protecteth the shrubbery!', 'Reduceth thy carbon footprinteth!', 'Stand ho climate changeth!', 'Air pollution is not a joketh, air pollution \'twill maketh thee choketh!']
+                    rIndex = random.randint(0, len(presets)-1)
+                    to_send = presets[rIndex]
                     await message.channel.send(str(to_send))
                 else:
                     to_gen = random.randint(1, 5)
