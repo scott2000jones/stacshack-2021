@@ -1,4 +1,4 @@
-# stacshack-2021
+# Ye Olde Shakespearean Discord Bots
 forsooth!
 
 neural network taken from https://github.com/minimaxir/textgenrnn
