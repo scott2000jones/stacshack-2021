@@ -50,7 +50,7 @@ class Greetings(commands.Cog):
 
     @commands.Cog.listener()
     async def on_message(self, message):
-        if time.time() - self.start_time > 10:
+        if time.time() - self.start_time > 120:
             
             diceroll = random.randint(0, 100)
             end_message = "The playeth is ov'r, thanketh thee f'r watching!"
